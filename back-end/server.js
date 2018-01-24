@@ -1,3 +1,4 @@
+
 'use strict'
 
 const Hapi = require('hapi')
@@ -43,6 +44,15 @@ server.route({
             origin: ['*'],
             additionalHeaders: ['cache-control', 'x-requested-with']
         }
+    }
+})
+
+server.route({
+    method: 'POST',
+    path: '/cars',
+    handler: (request, h) => {
+        console.log(request.payload)
+        return h.response('success')
     }
 })
 
