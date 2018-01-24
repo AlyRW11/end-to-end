@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -18,12 +17,13 @@ class App extends Component {
   async componentDidMount() {
     const data = await this.getData()
 
-    this.setState({ message: data })
+    this.setState({ message: data.message })
+    console.log(data)
   }
 
   render() {
     return (
-      <div className="App">
+      <div >
       <h1>{this.state.message}</h1>
       </div>
     );
