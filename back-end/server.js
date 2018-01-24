@@ -1,6 +1,6 @@
 'use strict'
 
-const Hapi = require('hapi');
+const Hapi = require('hapi')
 
 const server = Hapi.server({ 
     host: 'localhost', 
@@ -11,9 +11,15 @@ server.route({
     method: 'GET',
     path:'/', 
     handler: (request, h) => {
-        return 'hello world';
+        return {message:'hello world'}
+    },
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
     }
-});
+})
 
 async function start() {
 
