@@ -21,6 +21,31 @@ server.route({
     }
 })
 
+server.route({
+    method: 'GET',
+    path:'/cars', 
+    handler: (request, h) => {
+        return {cars: [{
+            make: "Jeep",
+            model: "Wrangler",
+            year: 2011,
+            mileage: 92352
+        },{
+            make: "Nissan",
+            model: "Altima",
+            year: 2017,
+            mileage: 5000
+        }] 
+        }
+    },
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    }
+})
+
 async function start() {
 
     try {

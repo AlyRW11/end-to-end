@@ -3,28 +3,39 @@ import './App.css';
 
 class App extends Component {
   state = {
-    message: "NO MESSAGE RECEIVED"
+    cars: []
   }
 
-  getData = async () => {
-    const url = 'http://localhost:3001/'
+  getData = async (path) => {
+    const url = `http://localhost:3001${path}`
     const response = await fetch(url)
     const data = await response.json()
 
     return data
   }
 
-  async componentDidMount() {
-    const data = await this.getData()
+  displayCars = (cars) =>{
+    const carElement = []
+    for (const car of cars){
+      carElement.push(<div>
+        <h1>{car.make}</h1>
+        <h2>{car.model}</h2>
+        <h3>{car.year}</h3>
+        <h4>{car.mileage}</h4>
+      </div>)
+  }
+    return carElement
+  }
 
-    this.setState({ message: data.message })
-    console.log(data)
+  async componentDidMount() {
+    const carsResponse = await this.getData("/cars")
+    this.setState({ cars: carsResponse.cars })
   }
 
   render() {
     return (
       <div >
-      <h1>{this.state.message}</h1>
+        <div>{this.displayCars(this.state.cars)}</div>
       </div>
     );
   }
