@@ -34,7 +34,7 @@ export default class extends Component {
 
     render(){
         return (
-            <div>{this.displayCars(this.state.cars)}e</div>
+            <div>{this.displayCars(this.state.cars)}</div>
         )
     }
 }
