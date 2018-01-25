@@ -3,6 +3,8 @@
 
 const Hapi = require('hapi')
 
+const Monk = require('monk')
+
 const server = Hapi.server({ 
     host: 'localhost', 
     port: 3001
@@ -25,19 +27,10 @@ server.route({
 server.route({
     method: 'GET',
     path:'/cars', 
-    handler: (request, h) => {
-        return {cars: [{
-            make: "Jeep",
-            model: "Wrangler",
-            year: 2011,
-            mileage: 92352
-        },{
-            make: "Nissan",
-            model: "Altima",
-            year: 2017,
-            mileage: 5000
-        }] 
-        }
+    handler: async (request, h) => {
+        const cars = await getCarsCollection()
+        const carObjects = await cars.find()
+        return { cars: carObjects ? carObjects : [] }
     },
     config: {
         cors: {
@@ -47,10 +40,19 @@ server.route({
     }
 })
 
+const getCarsCollection = async () => {
+    const connectionString ='mongodb://Application:R0bin112@ds111568.mlab.com:11568/dealership'
+    const db = Monk(connectionString)
+    const cars = await  db.get("cars")
+    return cars
+}
+
 server.route({
     method: 'POST',
     path: '/cars',
-    handler: (request, h) => {
+    handler: async (request, h) => {
+        const cars = await getCarsCollection()
+        cars.insert(request.payload)
         console.log(request.payload)
         return h.response('success')
     },
