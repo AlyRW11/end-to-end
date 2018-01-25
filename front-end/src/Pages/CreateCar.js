@@ -25,7 +25,6 @@ export default class extends Component {
             default:
                 throw Error("Invalid Id")
         }
-
     }
 
     async postData(path, data) {
@@ -42,9 +41,8 @@ export default class extends Component {
         return response
     }
 
-    clickHandler = () => {
-        //TODO: POst to API
-        console.log("Should post:", this.state)
+    clickHandler = async () => {
+        await this.postData(".cars", this.state)
     }
 
     componentDidUpdate() {
