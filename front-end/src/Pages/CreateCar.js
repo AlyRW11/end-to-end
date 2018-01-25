@@ -28,7 +28,7 @@ export default class extends Component {
     }
 
     async postData(path, data) {
-        const url = 'http://localhost:3001${path}'
+        const url = `http://localhost:3001${path}`
         const response = await fetch(url, {
             method: 'POST',
             mode: 'CORS',
@@ -42,7 +42,7 @@ export default class extends Component {
     }
 
     clickHandler = async () => {
-        await this.postData(".cars", this.state)
+        await this.postData("/cars", this.state)
     }
 
     componentDidUpdate() {
