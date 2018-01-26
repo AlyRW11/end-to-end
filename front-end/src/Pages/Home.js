@@ -12,17 +12,11 @@ export default class extends Component {
     
         return data
       }
-    
+
       displayCars = (cars) =>{
         const carElement = []
         for (const car of cars){
-          carElement.push(
-          <div key={car.make + car.model}>
-            <h1>{car.make}</h1>
-            <h2>{car.model}</h2>
-            <h3>{car.year}</h3>
-            <h4>{car.mileage}</h4>
-          </div>)
+          carElement.push(this.renderCar(car))
       }
         return carElement
       }
@@ -32,10 +26,30 @@ export default class extends Component {
         this.setState({ cars: carsResponse.cars })
       }
 
+      renderCar = (car) =>{
+        return (
+        <div key={car.make + car.model}>
+          <h1>{car.make}</h1>
+          <h2>{car.model}</h2>
+          <h3>{car.year}</h3>
+          <h4>{car.mileage}</h4>
+        </div>
+        )
+    }
+
+    renderCars = (cars) => {
+        const carElements = cars.map((car)=> {
+            return this.renderCar(car)
+        })
+        
+        return carElements
+    }
 
     render(){
         return (
-            <div>{this.displayCars(this.state.cars)}</div>
+            <div>
+            {this.renderCars(this.state.cars)}
+            </div>
         )
     }
 }
