@@ -16,7 +16,8 @@ export default class extends Component {
       displayCars = (cars) =>{
         const carElement = []
         for (const car of cars){
-          carElement.push(<div>
+          carElement.push(
+          <div key={car.make + car.model}>
             <h1>{car.make}</h1>
             <h2>{car.model}</h2>
             <h3>{car.year}</h3>
