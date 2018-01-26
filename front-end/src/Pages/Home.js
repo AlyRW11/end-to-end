@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 export default class extends Component {
     state = {
-        cars: []
+        cars: [],
+        planes: []
       }
     
       getData = async (path) => {
@@ -23,7 +24,12 @@ export default class extends Component {
     
       async componentDidMount() {
         const carsResponse = await this.getData("/cars")
-        this.setState({ cars: carsResponse.cars })
+        const planesResponse = await this.getData("/planes")
+        this.setState({ 
+            cars: carsResponse.cars, 
+            planes: planesResponse.planes 
+        })
+        
       }
 
       renderCar = (car) =>{
@@ -38,16 +44,37 @@ export default class extends Component {
     }
 
     renderCars = (cars) => {
-        const carElements = cars.map((car)=> {
-            return this.renderCar(car)
+        const carElements = cars
+        .filter((car, index, array) => {
+            console.log(car.make)
+            return ("A"<= car.make && car.make <= "M")
+            || ("a"<= car.make && car.make <= "m")
         })
-        
+        .map(this.renderCar)
+
         return carElements
+    }
+
+    renderPlane = (plane) => {
+        return (
+            <div>
+                {
+                    plane.class === "fighter"
+                    ? <h1>{plane.name}</h1>
+                    : plane.class === "cargo"
+                        ? <h2>{plane.name}</h2>
+                        : plane.class === "transportation"
+                        ? <h3>{plane.name}</h3>
+                        : <div>ERROR</div>
+                }
+            </div>
+        )
     }
 
     render(){
         return (
             <div>
+            {this.state.planes.map(this.renderPlane)}
             {this.renderCars(this.state.cars)}
             </div>
         )
