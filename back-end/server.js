@@ -142,8 +142,7 @@ server.route({
         if (cars.length === 0)
             return { car: null }
 
-        const carMake = cars
-            .reduce(findCarMake)
+        const carMake = cars.reduce(findCarMake)
 
         return { makes: carMake }
     },
